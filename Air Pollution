@@ -1,0 +1,42 @@
+function airPollution(input1, input2) {
+    let mapSofia = input1.map(x => x.split(` `).map(y => Number(y)));
+    let comands = input2.map(z => z.split(` `));
+    let result = [];
+
+    for (let a = 0; a < comands.length; a++) {
+        let weather = comands[a][0];
+        let index = Number(comands[a][1]);
+
+        switch (weather) {
+            case "breeze":
+                mapSofia[index] = mapSofia[index].map(x => Math.max(0, x - 15));
+                break;
+            case "gale":
+                for (b = 0; b < 5; b++) {
+                    mapSofia[b][index] = Math.max(0, mapSofia[b][index] - 20);
+                }
+                break;
+            case "smog":
+                for (let c = 0; c < 5; c++) {
+                    for (let d = 0; d < 5; d++) {
+                        mapSofia[c][d] += index;
+                    }
+                }
+                break;
+            default: break;
+        }
+    }
+    for (let a = 0; a < 5; a++) {
+        for (let b = 0; b < 5; b++) {
+            if (mapSofia[a][b] >= 50){
+                result.push(`[${a}-${b}]`);
+            }
+        }
+    }
+    if(result.length===0){
+        console.log("No polluted areas");
+    } else {
+        console.log(`Polluted areas: ${result.join(`, `)}`);
+    }
+
+}
